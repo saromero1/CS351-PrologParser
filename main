@@ -1,0 +1,104 @@
+/*#################
+* Natual Language Processing Example -- Parser
+* If computer wants to understand a line of code, it will check if this line of code fits into BNF grammar.
+* Similarly, if a computer wants to understand an English sentence, it would want to first check if this
+line is
+* a grammatically correct.
+*
+*
+* Let us see a short version of English grammar that would define sentences like: a human sees a dog.
+* This is the "BNF grammar" for this sentence:
+* RULE1: Sentence is defined as -> noun_phrase verb_phrase
+* RULE2: noun_phrase->determiner noun (E.g. an apple)
+* RULE3: verb_phrase->verb noun_phrase
+* RULE4: ver_phrase -> verb (E.g. looks an apple, or looks)
+* */
+/*The following is how we write the grammar into Prolog database:*/
+/*The first line translates the BNF RULE1 into Prolog. It means:
+* To generate a sentence S, the prolog solver will
+* 1.find a noun_phrase and save it in the variable Np
+* 2.find a verb_phrase and save it in the variable Vp
+* 3.call append function by merge Np and Vp into the same list and save the merged list in S (which is
+the variable used to save a sentance)
+* Put it into a function style that is more familar to you, it looks like:
+* string [] Find_Sentence ()
+* {
+* string [] Np=Find_Noun_Phrase();
+* string [] Vp=Find_Verb_Phrase();
+* string [] S= merge(Np, Vp)
+* return S
+*/
+/* Follow the example and translate RULE2 and RULE3 below into Prolog in a similar manner.
+* Make sure you have variables for each item and use append to "return" the merged list*/
+sentence(S):- noun_phrase(Np),verb_phrase(Vp),append(Np,Vp,S). % RULE1
+noun_phrase(Np):____your answer here____. % RULE2
+verb_phrase(Vp):____your answer here____. % RULE3
+/*Rule 4 is slightly different since it does not have 2 lists to merge together. We can use
+* empty list [] to occupy the space. Vp=V+[]. */
+verb_phrase(Vp):-verb(V),append(V,[],Vp).% RULE4
+%define words/token below
+determiner([the]). % define determiner the
+%____your answer here____. % define determiner a
+%____your answer here____. % define noun human
+%____your answer here____. % define noun cat
+%____your answer here____. %define verb sees
+/*Run query: ?-sentence(NewSen)
+* What will this query give you?*/
+%____your answer here____
+/*Set breakpoint at the first line of the code, run the same query step by step and observe closely.
+* How did this program work? Can you explain the process?*/
+%____your answer here____
+/*The above query shows you how we can generate grammatically correct sentences.
+*Do all the generated sentences semantically correct?*/
+%____your answer here____
+/*Why do you need append in every line?*/
+%____your answer here____
+/*Please take a screenshot of your program’s output and add it here*/
+%____Add your code output screenshot here____
+/*Now let us see how a parser can check whether the input line is a grammatically correct sentence.
+* Run query: ?-sentence([a, human, sees, the, cat]).
+* What is the output?
+* Set breakpoint and go step by step. Can you draw a parse tree following the steps? Please copy/paste
+the screenshot into this file. */
+%____Add your answers and the draw.io diagram screenshot here____
+/*We say programming languages are just like human languages all the time without really thinking this
+through.
+* After the above exercise, can you see the deeper link between natural vs. computer languages?
+* What are they?
+* Can you link the complier process to the process that your brain *might* use to understand human
+languages?
+* For those whom has psychology background, this might be an interesting topic to go deeper.*/
+%____your answer here____
+/*###################
+* PL Parser
+* We spent quite some time on parser this semester.
+* The parsing process (those LL,LR algorithms) seems super hard to write in C++.
+* But Prolog is born for this. See below:*/
+/*Let us use the BNF grammar for code like: varA=1+5
+* BNF:
+* Code->identifier equalop math
+* math->int mathop int
+*
+* Since the append func can only take 3 parameters, let us modify the BNF:
+*
+* Code->identifier remaining1
+* remaining1->equalop math
+* math->int remaining2
+* remaining2->mathop int
+*
+* modify the above grammar to Prolog
+* */
+%math_code(Code):- ____your answer here____.
+%____your answer here, 3 lines, corresponding to the 4-line modified BNF.____
+%define all the tokens below
+%____your answer here, multiple lines. integer range 1-5____
+/*Run query: ?-math_code(NewCode).
+* What will this query do?*/
+%____your answer here____
+/*What query should you write if you want to check whether VarA=1+5 is a legal line of math_code?*/
+%____your answer here____
+/*Set breakpoint and go step by step. How does the code work and generated new lines of code? Draw
+*a parse tree of the given example. */
+%____Add your answers and the draw.io diagram screenshot here____
+/*Please take a screenshot of your program’s output and add it here*/
+%____Add your code output screenshot here_
